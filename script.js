@@ -1,47 +1,3 @@
-// const video = document.getElementById('video')
-
-// async function extract() {
-//   const regionsToExtract = [new faceapi.Rect(0, 0, 100, 100)]
-//   const canvases = await faceapi.extractFaces(input, regionsToExtract)
-// }
-
-// extract()
-
-// Promise.all([
-//   faceapi.nets.tinyFaceDetector.loadFromUri('/models'),
-//   faceapi.nets.faceLandmark68Net.loadFromUri('/models'),
-//   faceapi.nets.faceRecognitionNet.loadFromUri('/models'),
-//   faceapi.nets.faceExpressionNet.loadFromUri('/models'),
-//   faceapi.nets.extractFaces.loadFromUri('/models'),
-// ]).then(startVideo)
-
-// function startVideo() {
-//   navigator.getUserMedia(
-//     { video: {} },
-//     stream => video.srcObject = stream,
-//     err => console.error(err)
-//   )
-// }
-
-// function takeFoto() {
-//   console.log('bam')
-// }
-
-// video.addEventListener('play', () => {
-//   const canvas = faceapi.createCanvasFromMedia(video)
-//   document.body.append(canvas)
-//   const displaySize = { width: video.width, height: video.height }
-//   faceapi.matchDimensions(canvas, displaySize)
-//   setInterval(async () => {
-//     const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions())
-//     const resizedDetections = faceapi.resizeResults(detections, displaySize)
-//     canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
-//     faceapi.draw.drawDetections(canvas, resizedDetections)
-//     // faceapi.extractFaces(input,)
-//     // faceapi.draw.drawFaceLandmarks(canvas, resizedDetections)
-//   }, 100)
-// })
-
 var video = document.querySelector("#videoElement");
 var snapshotCanvas = document.getElementById('snapshot');
 var captureButton = document.getElementById('capture');
@@ -71,5 +27,36 @@ function stopWebcam(e) {
 function takeFoto() {
   var context = snapshot.getContext('2d'); // window.snapshot --> tag canvas
   context.drawImage(video, 0, 0, snapshotCanvas.width, snapshotCanvas.height);
-  console.log(snapshot.toDataURL())
+  // const fotoBaseURL = snapshot.toDataURL()
+  start(snapshot)
+}
+
+Promise.all([
+  faceapi.nets.faceRecognitionNet.loadFromUri('models'),
+  faceapi.nets.faceLandmark68Net.loadFromUri('models'),
+  faceapi.nets.ssdMobilenetv1.loadFromUri('models')
+]).then(() => document.body.append('model ok'))
+
+
+async function start(foto) {
+  // console.log('foto', foto)
+  const regionsToExtract = [
+    new faceapi.Rect(0, 0, 100, 100)
+  ]
+  // async () => {
+  //   console.log('async')
+    const canvases = await faceapi.extractFaces(foto, regionsToExtract)
+    console.log(canvases)
+  // }
+
+
+  // const container = document.createElement('div')
+  // container.style.position = 'relative'
+  // document.body.append(container)
+  // document.body.append('Loaded')
+
+  // async () => {
+  //   const detections = await faceapi.detectAllFaces(foto)
+  //   document.body.append('Listo: ',detections.length)
+  // }
 }
