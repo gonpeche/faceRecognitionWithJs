@@ -43,6 +43,8 @@
 // })
 
 var video = document.querySelector("#videoElement");
+var snapshotCanvas = document.getElementById('snapshot');
+var captureButton = document.getElementById('capture');
 
 function openWebcam() {
   navigator.mediaDevices.getUserMedia({ video: true })
@@ -50,7 +52,7 @@ function openWebcam() {
       video.srcObject = stream;
     })
     .catch(function (err) {
-      console.log("Something went wrong!");
+      console.log("This went wrong: ", err);
     });
 }
 
@@ -62,6 +64,11 @@ function stopWebcam(e) {
     var track = tracks[i];
     track.stop();
   }
-  
+
   video.srcObject = null;
+}
+
+function takeFoto() {
+  var context = snapshot.getContext('2d');
+  context.drawImage(video, 0, 0, snapshotCanvas.width, snapshotCanvas.height);
 }
