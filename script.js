@@ -41,16 +41,27 @@
 //     // faceapi.draw.drawFaceLandmarks(canvas, resizedDetections)
 //   }, 100)
 // })
-let video;
-let track;
+
+var video = document.querySelector("#videoElement");
 
 function openWebcam() {
   navigator.mediaDevices.getUserMedia({ video: true })
-  .then(function(stream) {
-    console.log('filmando')
-    video = document.getElementById('camara');
-    // video.src = URL.createObjectURL(stream);
-    // track = stream.getTracks()[0]; // if only one media track
-  })
-  .catch((err) => console.error(err));
+    .then(function (stream) {
+      video.srcObject = stream;
+    })
+    .catch(function (err) {
+      console.log("Something went wrong!");
+    });
+}
+
+function stopWebcam(e) {
+  var stream = video.srcObject;
+  var tracks = stream.getTracks();
+
+  for (var i = 0; i < tracks.length; i++) {
+    var track = tracks[i];
+    track.stop();
+  }
+  
+  video.srcObject = null;
 }

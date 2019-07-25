@@ -9,28 +9,36 @@
   <script defer src="script.js"></script>
   <style>
     body {
-      margin: 0;
-      padding: 0;
-      width: 100vw;
-      height: 100vh;
       display: flex;
       flex-direction: column;
-      justify-content: center;
       align-items: center;
     }
+    #container {
+      margin: 0px auto;
+      width: 500px;
+      height: 375px;
+      border: 10px #333 solid;
+    }
+    #videoElement {
+      width: 500px;
+      height: 375px;
+      background-color: #666;
+    }
 
-    canvas {
-      position: absolute;
+    button {
+      width: 100px;
+      align-items: center;
     }
   </style>
 </head>
 <body>
-  <button onclick="openWebcam()">Open Webcam</button>
-  <video id='camera'></video>
-  <!-- <div>
-    <video id="video" width="100" height="100" autoplay muted></video>
+  <div>
+    <button onclick="openWebcam()">Open Webcam</button>
   </div>
-  <div></div> -->
+  <div id="container">
+    <video autoplay="true" id="videoElement"></video>
+  </div>
+  <button onclick="stopWebcam()">Kill webcam</button>
   <button onclick="takeFoto()">Take Foto</button>
 </body>
 </html>
