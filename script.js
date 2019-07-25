@@ -69,6 +69,7 @@ function stopWebcam(e) {
 }
 
 function takeFoto() {
-  var context = snapshot.getContext('2d');
+  var context = snapshot.getContext('2d'); // window.snapshot --> tag canvas
   context.drawImage(video, 0, 0, snapshotCanvas.width, snapshotCanvas.height);
+  console.log(snapshot.toDataURL())
 }
