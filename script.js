@@ -27,11 +27,11 @@ function stopWebcam(e) {
 function takeFoto() {
   var context = snapshot.getContext('2d'); // window.snapshot --> tag canvas
   context.drawImage(video, 0, 0, snapshotCanvas.width, snapshotCanvas.height);
-  snapshot.src = 'ehPuto'
-  document.getElementById('snapshot').src = 'eh puto'
+
+  document.getElementById('captura').src = snapshot.toDataURL()
   
-  console.log('DOM',document.getElementById('snapshot'))
-  console.log(snapshot)
+  // console.log('DOM',document.getElementById('snapshot'))
+  // console.log(snapshot)
   // const fotoBaseURL = snapshot.toDataURL()
   // snapshot.src = fotoBaseURL
   // start(snapshot)
@@ -45,17 +45,17 @@ Promise.all([
 ]).then(() => console.log('models OK'))
 
 async function processImage() {
-  // let inputSize = 512;
-  // let scoreThreshold = 0.5;
+  const regionsToExtract = [
+  new faceapi.Rect(0, 0, 100, 100)
+]
+  const faceDetected = await faceapi.detectSingleFace(captura)
 
-  // const options = new faceapi.TinyFaceDetectorOptions({ inputSize, scoreThreshold })
-
-  const faceDetected = await faceapi.detectSingleFace(snapshot)
-  console.log('imagen:',snapshot)
-  console.log('faceDetected:', faceDetected)
-
-  // const faceExtracted = await faceapi.extractFaces(snapshot, faceDetected)
-  // console.log('faceExtracted: ',faceExtracted)
+  console.log('detection: ',faceDetected)
+  console.log('inputImgEl:', captura)
+  const faceExtracted = await faceapi.extractFaces(captura, regionsToExtract)
+  console.log('faceExtracted',faceExtracted)
+  document.getElementById('facesContainer').append(faceExtracted[0])
+  // facesContainer.append(faceExtracted)
 
 }
 
