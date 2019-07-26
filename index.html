@@ -26,7 +26,10 @@
     }
 
     button {
-      width: 100px;
+      padding: 5px;
+      margin-top: 5px;
+      margin-bottom: 5px;
+      width: 110px;
       align-items: center;
     }
 
@@ -44,6 +47,8 @@
   </div>
   <button onclick="stopWebcam()">Kill webcam</button>
   <button onclick="takeFoto()" id="capture">Take Foto</button>
+  <button onclick="processImage()" id="process">Process photo</button>
+  <!-- <img id="snapshot2" src="" alt=""> -->
   <canvas id="snapshot" width=320 height=240></canvas>
 </body>
 </html>
