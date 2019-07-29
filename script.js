@@ -45,17 +45,17 @@ Promise.all([
 ]).then(() => console.log('models OK'))
 
 async function processImage() {
-  const regionsToExtract = [
-  new faceapi.Rect(0, 0, 100, 100)
-]
+  const regionsToExtract = [ new faceapi.Rect(0, 0, 100, 100) ]
+  console.log(captura)
+  setTimeout(() => console.log('hola'), 1000)
+  console.log('donde')
   const faceDetected = await faceapi.detectSingleFace(captura)
 
-  console.log('detection: ',faceDetected)
-  console.log('inputImgEl:', captura)
-  const faceExtracted = await faceapi.extractFaces(captura, regionsToExtract)
-  console.log('faceExtracted',faceExtracted)
-  document.getElementById('facesContainer').append(faceExtracted[0])
-  // facesContainer.append(faceExtracted)
+  console.log('faceDetected:', faceDetected)
+  const faceExtracted = await faceapi.extractFaces(captura, faceDetected)
+  // console.log('faceExtracted',faceExtracted)
+  // document.getElementById('facesContainer').append(faceExtracted[0])
+  facesContainer.append(faceExtracted)
 
 }
 
